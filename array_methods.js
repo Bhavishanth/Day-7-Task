@@ -75,31 +75,25 @@ xhr.onload = function()
 
 //Print the country which uses US Dollars as currency.
 
-var xhr = new XMLHttpRequest;
-xhr.open('GET', 'https://restcountries.com/v3.1/all');
-xhr.responseType = 'json';
-xhr.send()
-
-xhr.onload = function()
-{
-    var responseObj = xhr.response;
-
-    var res = responseObj.map(function(item1)
-
-    {
-        return item1.currencies
-
+var usd = new XMLHttpRequest();
+usd.open("GET", "https://restcountries.com/v3.1/all");
+usd.send();
+usd.onload = () => {
+    let data = JSON.parse(usd.response);
+     
+    let ans = data.filter((item) => (item.currencies !== undefined))
+    
+    let realanswer = ans.filter((data) =>  {
+    for (let key in data.currencies) {
+        if(data.currencies[key].name === "United States dollar"){
+            return data;
+      }
+    }
     })
-    var res1 = res.filter(function(item2)
-
-    {
-        return item2 == 'USD'
-
-    })
-
-
-console.log(res1)
+   
+      console.log(realanswer); 
 }
+
 
 // Print the following details name, capital, flag using forEach function
 
